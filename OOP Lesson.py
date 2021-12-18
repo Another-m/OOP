@@ -9,7 +9,7 @@ class Student:
         self.grades = {}
 
     def average_value(self):
-        return round(sum(list(self.grades.values())[0])/len(list(self.grades.values())[0]),2)
+        return round(sum(list(self.grades.values())[0])/len(list(self.grades.values())[0]), 2)
 
     def __str__(self):
         return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_value()}\nКурсы в процессе изучения: {self.courses_in_progress}\nЗавершенные курсы: {self.finished_courses}'
@@ -77,6 +77,7 @@ cool_mentor = Reviewer('Some', 'Buddy')
 cool_mentor.courses_attached += ['Python']
 
 cool_lecturer = Lecturer('Bill', 'Gates')
+cool_lecturer.courses_attached += ['Python']
 
 cool_mentor.rate_hw(best_student, 'Python', 5)
 cool_mentor.rate_hw(best_student, 'Python', 4)
@@ -95,16 +96,16 @@ print()
 print(cool_lecturer)
 print('---------------------')
 
-some_student = Student('RHHH', 'Jik', '22')
-some_student.courses_in_progress += ['Java']
-some_mentor = Reviewer('GGGG', 'BBBB')
-some_mentor.courses_attached += ['Java']
-some_lecturer = Lecturer('Steve', 'Jobes')
-some_mentor.rate_hw(some_student, 'Java', 3)
-some_mentor.rate_hw(some_student, 'Java', 4)
-some_lecturer.received_rate(some_student, 'Java', 3)
-# print(f"{some_student.name} {some_student.surname}: предмет: {list(some_student.grades.keys())} оценки: {list(some_student.grades.values())}")
-# print(f"{some_lecturer.name} {some_lecturer.surname}: предмет: {list(some_lecturer.grades_l.keys())} оценки: {list(some_lecturer.grades_l.values())}")
+some_student = Student('Ruby', 'Jik', '22')
+some_student.courses_in_progress += ['Python']
+some_mentor = Reviewer('George', 'Bild')
+some_mentor.courses_attached += ['Python']
+some_lecturer = Lecturer('Steve', 'Jobs')
+some_lecturer.courses_attached += ['Python']
+some_mentor.rate_hw(some_student, 'Python', 3)
+some_mentor.rate_hw(some_student, 'Python', 4)
+some_lecturer.received_rate(some_student, 'Python', 3)
+
 print(some_student)
 print()
 print(some_mentor)
@@ -112,3 +113,28 @@ print()
 print(some_lecturer)
 print(cool_lecturer > some_lecturer)
 print(best_student < some_student)
+print('---------------------')
+
+
+stud_list = [best_student, some_student]
+lect_list = [cool_lecturer, some_lecturer]
+
+def average_rate_student(stud_list, courses):
+    result = 0
+    for student in stud_list:
+        if courses in student.courses_in_progress:
+            result += student.average_value()
+    result = result/len(stud_list)
+    print(f" Средний балл сдудентов кураса {courses}: {result}")
+
+
+def average_rate_lecturers(lect_list, courses):
+    result = 0
+    for lecturer in lect_list:
+        if courses in lecturer.courses_attached:
+            result += lecturer.average_value()
+    result = result/len(lect_list)
+    print(f" Средний балл лекторов кураса {courses}: {result}")
+
+average_rate_student(stud_list, 'Python')
+average_rate_lecturers(lect_list, 'Python')
